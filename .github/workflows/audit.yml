@@ -22,7 +22,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
+          pip install -r agent/requirements.txt
 
       - name: Run dependency auditor
         env:
