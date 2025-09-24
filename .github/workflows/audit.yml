@@ -1,0 +1,45 @@
+name: Dependency Audit
+
+on:
+  workflow_call: # permite ser chamado de outros repos
+    inputs:
+      base-branch:
+        required: false
+        type: string
+        default: "main"
+
+jobs:
+  run-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run dependency auditor
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python agent/dependency_auditor.py
+
+      - name: Commit and push report
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: add dependency audit report"
+          branch: audit-report
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          base: ${{ inputs.base-branch }}
+          branch: audit-report
+          title: "Dependency Audit Report"
+          body: "Automated audit of project dependencies."
