@@ -1,0 +1,22 @@
+# LangChain para orquestrar o LLM
+langchain>=1.0.0
+
+# Cliente OpenAI
+openai>=1.0.0
+
+# Para lidar com prompts e templates
+pydantic>=2.0.0
+
+# Logs detalhados
+loguru>=0.7.0
+
+# Para requests e scraping de dependências/CVEs
+requests>=2.31.0
+beautifulsoup4>=4.12.2
+
+# Para geração de tabelas e Markdown
+tabulate>=0.9.0
+markdown>=3.5.3
+
+# Para manipulação de datas
+python-dateutil>=2.8.2
